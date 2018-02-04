@@ -77,7 +77,8 @@
     query.oninput = function(){
       let link = validateYouTubeUrl(query.value)
       if (link) {
-        window.open(link, "_self", "width=" + width + ",height=" + height)
+        let hidebars = "menubar=0,scrollbars=0,status=0,titlebar=0,toolbar=0"
+        window.open(link, "", hidebars + ",width=" + width + ",height=" + height)
       }
     }
     size.oninput = function(){
@@ -98,7 +99,6 @@
     }
     function windowPreviewResize(width, height) {
       let windowPreview = document.getElementById("windowPreview")
-      console.log(windowPreview)
       windowPreview.style.width = width + "px"
       windowPreview.style.height = height + "px"
     }
