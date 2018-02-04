@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>piptube alpha</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <style type="text/css">
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      font-size: 18px;
+      color: #615f5f;
+      display: flex;
+      flex-direction: column;
+    }
+    .wrapper {
+      width: 600px;
+      margin: 0 auto;
+      flex: 1 0 auto;
+    }
+    .youtube-link {
+      padding: 20px 40px;
+      margin: 0 auto;
+      border: 1px solid #615f5f;
+      border-radius: 10px;
+      font-size: 22px;
+      display: block;
+      width: 500px;
+    }
+    .youtube-link:focus {
+      outline: 0;
+      border-color: #000;
+    }
+    .size-range {
+      width: 600px;
+      margin: 30px auto;
+    }
+    .size-range:focus {
+      outline: 0;
+    }
+    .disclaimer {
+      margin: 20px;
+    }
+    .window-preview {
+      background-color: #615f5f;
+    }
+    footer {
+      text-align: center;
+      margin: 10px;
+      font-size: 10px;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrapper">
+    <div class="disclaimer">
+      <p>Paste the link to youtube video in the input below.</p>
+      <p>New small window will open and video will start to play.</p> 
+      <p>Don't forget to right click on the window bar and select <b>"Always on top"</b> for maximum satisfaction.</p>
+    </div>
+    <input class="youtube-link" type="text" id="youtubeLink">
+    <input class="size-range" id="sizeRange" type="range" name="" min="50" max="600" value="320" step="1">
+    <div class="window-preview" id="windowPreview""></div>
+  </main>
+  <footer><span>Made with love in Troieshchyna</span></footer>
+
+  <script type="text/javascript">
+    let query = document.getElementById("youtubeLink")
+    let size = document.getElementById("sizeRange")
+    let width = 320
+    let height = 180
+    windowPreviewResize(width, height)
+
+    query.oninput = function(){
+      let link = validateYouTubeUrl(query.value)
+      if (link) {
+        window.open(link, "", "width=" + width + ",height=" + height)
+      }
+    }
+    size.oninput = function(){
+      width = size.value
+      height = Math.floor(width * 720 / 1280)
+      windowPreviewResize(width, height)
+    }
+    function validateYouTubeUrl(url)
+    {
+        if (url != undefined || url != '') {
+            var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
+            var match = url.match(regExp);
+            if (match && match[2].length == 11) {
+                return 'https://www.youtube.com/embed/' + match[2] + '?autoplay=1&modestbranding=1'
+            }
+        }
+        return false
+    }
+    function windowPreviewResize(width, height) {
+      let windowPreview = document.getElementById("windowPreview")
+      console.log(windowPreview)
+      windowPreview.style.width = width + "px"
+      windowPreview.style.height = height + "px"
+    }
+  </script>
+</body>
+</html>
