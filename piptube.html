@@ -77,7 +77,7 @@
     query.oninput = function(){
       let link = validateYouTubeUrl(query.value)
       if (link) {
-        window.open(link, "", "width=" + width + ",height=" + height)
+        window.open(link, "_self", "width=" + width + ",height=" + height)
       }
     }
     size.oninput = function(){
